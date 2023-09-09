@@ -6,13 +6,24 @@ import 'package:get_storage/get_storage.dart';
 
 import '../../app_utils/app_strings.dart';
 import '../../storage_names.dart';
+import '../end_points.dart';
 
 class AppInterceptor extends Interceptor {
   @override
   Future<void> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    options.headers[HttpHeaders.authorizationHeader] = AppStrings.bearer +
-        (GetStorage().read<String>(StorageNames.tokenBox) ?? '');
+    // Check if this is a login request based on the URL or any other criteria.
+
+    final isLoginOrRegistrationRequest =
+        options.uri.path == '/api/${EndPoint.apiLogin}' ||
+            options.uri.path == '/api/${EndPoint.apiSignUp}';
+
+    // Only add the Authorization header if it's not a login request.
+    if (!isLoginOrRegistrationRequest) {
+      options.headers[HttpHeaders.authorizationHeader] = AppStrings.bearer +
+          (GetStorage().read<String>(StorageNames.tokenBox) ?? '');
+    }
+
     options.headers[HttpHeaders.acceptHeader] = ContentType.json;
     options.headers[AppStrings.lang] =
         GetStorage().read<String>(StorageNames.langBox);

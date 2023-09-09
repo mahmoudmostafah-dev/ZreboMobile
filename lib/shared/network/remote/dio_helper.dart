@@ -27,7 +27,6 @@ class DioHelper {
         // 60 seconds
       ),
     )..interceptors.add(AppInterceptor());
-
     (dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
         (HttpClient client) {
       client.badCertificateCallback =

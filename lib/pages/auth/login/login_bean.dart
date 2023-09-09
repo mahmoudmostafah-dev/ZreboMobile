@@ -12,11 +12,14 @@ class LoginBean extends GetxController {
   final _box = GetStorage();
   final UserProvider userProvider = Get.find();
 
+  var formKey = GlobalKey<FormState>();
+
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  var formKey = GlobalKey<FormState>();
+
   var passwordObscureText = true;
   IconData passwordSuffix = Icons.visibility;
+
   void changeObscure() {
     passwordObscureText = !passwordObscureText;
 
@@ -31,8 +34,6 @@ class LoginBean extends GetxController {
   late UserModel userModel;
 
   void login({
-    required String userName,
-    required String password,
     required BuildContext context,
   }) async {
     isLoading = true;
@@ -40,12 +41,14 @@ class LoginBean extends GetxController {
     try {
       update();
 
-      userModel = await userProvider.loginOnline(userName, password);
+      userModel = await userProvider.loginOnline(
+          userNameController.text, passwordController.text);
 
       _box.write(StorageNames.tokenBox, userModel.token);
       _box.write(StorageNames.userNameBox, userModel.user.username);
       _box.write(StorageNames.userIdBox, userModel.user.id);
 
+      print(userModel.token);
       Get.offAndToNamed(HomeScreen.routeName);
     } catch (e) {
       Util.getToastSnack(

@@ -89,7 +89,7 @@ class LoginScreen extends StatelessWidget {
                               text: 'signIn'.tr,
                               backGround: SharedColor.primary,
                               function: () {
-                                //   loginBean.loginAction(context);
+                                loginBean.login(context: context);
                               },
                             ),
                           ),
