@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:vortex_zrebo_mobile/models/auth/user_model.dart';
 
 import '../../../providers/user_provider.dart';
@@ -61,28 +63,51 @@ class LoginBean extends GetxController {
       update();
     }
   }
-  // GoogleSignInAccount? _googleUser;
 
-  // final GoogleSignIn _googleSignIn = GoogleSignIn(
-  //   //clientId: '202123877838-dulr7at35ufohufh53cuts4lj05ad1ae.apps.googleusercontent.com',
-  //   scopes: [
-  //     //'email',
-  //     //'https://www.googleapis.com/auth/contacts.readonly',
-  //   ],
-  // );
+  GoogleSignInAccount? _googleUser;
 
-  // Future<void> signInGoogle() async {
-  //   try {
-  //     _googleUser = await _googleSignIn.signIn();
-  //
-  //     print(_googleUser!);
-  //   } catch (e) {
-  //     debugPrint(e.toString());
-  //   }
-  // }
-  //
-  // Future<void> signOutGoogle() async {
-  //   await _googleSignIn.signOut();
-  //   _googleUser = null;
-  // }
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+      //clientId: '1072468680137-nm8j6d828j2qrmckgnk5d3asger0tmrl.apps.googleusercontent.com',
+      // scopes: [
+      //   //'email',
+      //   //'https://www.googleapis.com/auth/contacts.readonly',
+      // ],
+      );
+
+  Future<void> signInGoogle() async {
+    try {
+      print('done');
+      _googleUser = await _googleSignIn.signIn();
+
+      print(_googleUser?.email);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  Future<void> signOutGoogle() async {
+    await _googleSignIn.signOut();
+    _googleUser = null;
+  }
+
+  Future<void> facebookLogin() async {
+    try {
+      final FacebookAuth facebookAuth = FacebookAuth.instance;
+
+      final LoginResult result =
+          await facebookAuth.login(permissions: ['public_profile', 'email']);
+
+      if (result.status == LoginStatus.success) {
+        final AccessToken accessToken = result.accessToken!;
+        print('Logged in successfully!');
+        print('User ID: ${accessToken.userId}');
+        print('Access Token: ${accessToken.token}');
+        // You can use the access token to make Facebook API requests.
+      } else {
+        print('Facebook login failed.');
+      }
+    } catch (e) {
+      print('Error during Facebook login: $e');
+    }
+  }
 }

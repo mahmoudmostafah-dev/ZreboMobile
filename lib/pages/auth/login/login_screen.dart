@@ -99,7 +99,9 @@ class LoginScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  loginBean.facebookLogin();
+                                },
                                 icon: const Icon(
                                   Icons.facebook,
                                   size: 40,
@@ -117,7 +119,7 @@ class LoginScreen extends StatelessWidget {
                               IconButton(
                                 padding: const EdgeInsets.only(top: 10),
                                 onPressed: () {
-                                  // loginBean.signInGoogle();
+                                  loginBean.signInGoogle();
                                 },
                                 icon: SvgPicture.asset(
                                     'assets/images/icons8-google-240.svg'),
