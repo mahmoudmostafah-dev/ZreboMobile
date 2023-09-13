@@ -15,7 +15,12 @@ class HomeScreen extends StatelessWidget {
     SizeConfig().init(context);
 
     return SafeArea(
-      child: Container(),
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Container(
+          child: Text('Welcome Home Screen'),
+        ),
+      ),
     );
   }
 }

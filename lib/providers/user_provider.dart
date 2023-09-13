@@ -14,7 +14,17 @@ class UserProvider {
     if (value!.statusCode == 200 || value!.statusCode == 201) {
       return UserModel.fromJson(value.data);
     } else {
-      return throw Exception("Failed to load Users");
+      return throw Exception("Failed to login");
+    }
+  }
+
+  Future<UserModel> signUp(UserRequest userRequest) async {
+    var value = await DioHelper.postData(
+        url: EndPoint.apiSignUp, data: userRequest.toJson());
+    if (value!.statusCode == 200 || value!.statusCode == 201) {
+      return UserModel.fromJson(value.data);
+    } else {
+      return throw Exception("Failed to Register");
     }
   }
 }

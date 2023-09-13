@@ -46,10 +46,31 @@ class LoginScreen extends StatelessWidget {
                       key: loginBean.formKey,
                       child: Column(
                         children: [
+                          Visibility(
+                            visible: loginBean.isSignUp,
+                            child: Column(
+                              children: [
+                                LoginTextWidget(
+                                  controller: loginBean.emailController,
+                                  labelText: 'email'.tr,
+                                  textInputType: TextInputType.emailAddress,
+                                  prefixIcon: Icons.email,
+                                  validate: (value) {
+                                    if (value.isEmpty && loginBean.isSignUp) {
+                                      return 'emailNEmpty'.tr;
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                SizedBox(
+                                    height: SizeConfig.safeBlockVertical * 2.5),
+                              ],
+                            ),
+                          ),
                           LoginTextWidget(
                             controller: loginBean.userNameController,
                             labelText: 'userName'.tr,
-                            textInputType: TextInputType.emailAddress,
+                            textInputType: TextInputType.text,
                             prefixIcon: Icons.email,
                             validate: (value) {
                               if (value.isEmpty) {
@@ -76,7 +97,7 @@ class LoginScreen extends StatelessWidget {
                               loginBean.changeObscure();
                             },
                             onFieldSubmitted: (value) {
-                              //     loginBean.loginAction(context);
+                              loginBean.authAction(context);
                             },
                           ),
                           SizedBox(height: SizeConfig.safeBlockVertical * 6),
@@ -86,45 +107,64 @@ class LoginScreen extends StatelessWidget {
                               child: CircularProgressIndicator(),
                             ),
                             fallback: (context) => SpecButtonFormWidget(
-                              text: 'signIn'.tr,
+                              text: loginBean.isSignUp
+                                  ? 'signUp'.tr
+                                  : 'signIn'.tr,
                               backGround: SharedColor.primary,
                               function: () {
-                                loginBean.login(context: context);
+                                loginBean.authAction(context);
                               },
                             ),
                           ),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: TextButton(
+                              onPressed: () {
+                                loginBean.isSignUpAction();
+                              },
+                              child: TextUtils(
+                                text: loginBean.isSignUp
+                                    ? 'iHaveAccount'.tr
+                                    : 'newUser'.tr,
+                                color: SharedColor.primary,
+                              ),
+                            ),
+                          ),
                           SizedBox(height: SizeConfig.safeBlockVertical * 2),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  loginBean.facebookLogin();
-                                },
-                                icon: const Icon(
-                                  Icons.facebook,
-                                  size: 40,
-                                  color: Colors.blueAccent,
+                          Visibility(
+                            visible: !loginBean.isSignUp,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    loginBean.facebookLogin();
+                                  },
+                                  icon: const Icon(
+                                    Icons.facebook,
+                                    size: 40,
+                                    color: Colors.blueAccent,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                  width: SizeConfig.safeBlockVertical * 2.5),
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.apple, size: 40),
-                              ),
-                              SizedBox(
-                                  width: SizeConfig.safeBlockVertical * 2.5),
-                              IconButton(
-                                padding: const EdgeInsets.only(top: 10),
-                                onPressed: () {
-                                  loginBean.signInGoogle();
-                                },
-                                icon: SvgPicture.asset(
-                                    'assets/images/icons8-google-240.svg'),
-                              )
-                            ],
+                                SizedBox(
+                                    width: SizeConfig.safeBlockVertical * 2.5),
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.apple, size: 40),
+                                ),
+                                SizedBox(
+                                    width: SizeConfig.safeBlockVertical * 2.5),
+                                IconButton(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  onPressed: () {
+                                    loginBean.signInGoogle();
+                                  },
+                                  icon: SvgPicture.asset(
+                                      'assets/images/icons8-google-240.svg'),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),

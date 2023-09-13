@@ -16,8 +16,16 @@ class LoginBean extends GetxController {
 
   var formKey = GlobalKey<FormState>();
 
+  bool isSignUp = false;
+
+  void isSignUpAction() {
+    isSignUp = !isSignUp;
+    update();
+  }
+
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
 
   var passwordObscureText = true;
   IconData passwordSuffix = Icons.visibility;
@@ -33,35 +41,78 @@ class LoginBean extends GetxController {
 
   bool isLoading = false;
 
-  late UserModel userModel;
-
-  void login({
-    required BuildContext context,
-  }) async {
-    isLoading = true;
-
-    try {
-      update();
-
-      userModel = await userProvider.loginOnline(
-          userNameController.text, passwordController.text);
-
-      _box.write(StorageNames.tokenBox, userModel.token);
-      _box.write(StorageNames.userNameBox, userModel.user.username);
-      _box.write(StorageNames.userIdBox, userModel.user.id);
-
-      print(userModel.token);
-      Get.offAndToNamed(HomeScreen.routeName);
-    } catch (e) {
-      Util.getToastSnack(
-        message: 'userNFound'.tr,
-        context: context,
-        toastState: ToastState.error,
-      );
-    } finally {
-      isLoading = false;
-      update();
+  void authAction(BuildContext context) {
+    if (isSignUp) {
+      signUp(context);
+    } else {
+      signIn(context);
     }
+  }
+
+  void signIn(BuildContext context) async {
+    if (formKey.currentState!.validate()) {
+      isLoading = true;
+      update();
+
+      try {
+        UserModel userModel = await userProvider.loginOnline(
+          userNameController.text,
+          passwordController.text,
+        );
+
+        saveBox(userModel);
+
+        print(userModel.token);
+        Get.offAndToNamed(HomeScreen.routeName);
+      } catch (e) {
+        Util.getToastSnack(
+          message: 'userNFound'.tr,
+          context: context,
+          toastState: ToastState.error,
+        );
+      } finally {
+        isLoading = false;
+        update();
+      }
+    }
+  }
+
+  void signUp(BuildContext context) async {
+    if (formKey.currentState!.validate()) {
+      isLoading = true;
+
+      try {
+        update();
+
+        UserRequest userRequest = UserRequest(
+          username: userNameController.text,
+          password: passwordController.text,
+          email: emailController.text,
+        );
+
+        UserModel userModel = await userProvider.signUp(userRequest);
+
+        saveBox(userModel);
+
+        print(userModel.token);
+        Get.offAndToNamed(HomeScreen.routeName);
+      } catch (e) {
+        Util.getToastSnack(
+          message: 'userNFound'.tr,
+          context: context,
+          toastState: ToastState.error,
+        );
+      } finally {
+        isLoading = false;
+        update();
+      }
+    }
+  }
+
+  saveBox(UserModel userModel) {
+    _box.write(StorageNames.tokenBox, userModel.token);
+    _box.write(StorageNames.userNameBox, userModel.user.username);
+    _box.write(StorageNames.userIdBox, userModel.user.id);
   }
 
   GoogleSignInAccount? _googleUser;
@@ -76,7 +127,6 @@ class LoginBean extends GetxController {
 
   Future<void> signInGoogle() async {
     try {
-      print('done');
       _googleUser = await _googleSignIn.signIn();
 
       print(_googleUser?.email);
