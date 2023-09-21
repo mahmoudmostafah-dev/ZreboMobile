@@ -3,12 +3,12 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:vortex_zrebo_mobile/models/auth/user_model.dart';
 
+import '../../../models/auth/user_model.dart';
 import '../../../providers/user_provider.dart';
 import '../../../shared/app_utils/util.dart';
 import '../../../shared/storage_names.dart';
-import '../home/home_screen.dart';
+import '../../home/home_screen.dart';
 
 class LoginBean extends GetxController {
   final _box = GetStorage();

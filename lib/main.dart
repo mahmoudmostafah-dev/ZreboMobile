@@ -7,8 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-import 'pages/auth/home/home_screen.dart';
-import 'pages/auth/login/login_screen.dart';
+import 'pages/home/home_screen.dart';
 import 'router.dart';
 import 'shared/languages/LanguageName.dart';
 import 'shared/languages/translation.dart';
@@ -56,10 +55,10 @@ class MyApp extends StatelessWidget {
       //useInheritedMediaQuery: true,
       // builder: DevicePreview.appBuilder,
 
-      initialRoute: GetStorage().read(StorageNames.tokenBox) == null
-          ? LoginScreen.routeName
-          : HomeScreen.routeName,
-      // initialRoute: HomeScreen.routeName,
+      // initialRoute: GetStorage().read(StorageNames.tokenBox) == null
+      //     ? LoginScreen.routeName
+      //     : HomeScreen.routeName,
+      initialRoute: HomeScreen.routeName,
 
       getPages: AppRouter.pages,
 

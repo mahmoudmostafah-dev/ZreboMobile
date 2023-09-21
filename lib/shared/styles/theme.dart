@@ -4,7 +4,7 @@ import 'colors.dart';
 
 class ThemesApp {
   static final light = ThemeData(
-    //useMaterial3: true,
+    useMaterial3: true,
     colorScheme: ColorScheme(
       brightness: Brightness.light,
       primary: SharedColor.primary,
@@ -31,7 +31,7 @@ class ThemesApp {
   );
 
   static final dark = ThemeData(
-    //useMaterial3: true,
+    useMaterial3: true,
     colorScheme: ColorScheme(
       brightness: Brightness.dark,
       primary: SharedColor.primaryDark,

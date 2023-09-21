@@ -6,10 +6,9 @@ import 'package:flutter/material.dart';
 // final getLogoColorFour = HexColor('#FFC41A3B');
 // final getLogoColorFive = HexColor('#ff1B1F32');
 class SharedColor {
-  static Color primary = const Color(0xff0ac09a);
-  static Color getLogoColorSecond = const Color(0xffa37430);
-  static Color getLogoColorThird = const Color(0xfffbc52d);
-  static Color getLogoColorFour = const Color(0xFFC41A3B);
+  static Color primary = const Color(0xffFCD949);
+  static Color getLogoColorSecond = const Color(0xffF0B90B);
+
   static Color getLogoColorFive = const Color(0xff1B1F32);
 
   static Color primaryDark = const Color(0xFFff4667);
