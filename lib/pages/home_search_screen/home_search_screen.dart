@@ -26,7 +26,6 @@ class HomeSearchScreen extends StatelessWidget {
                     color: Get.isDarkMode ? Colors.white : SharedColor.primary,
                   ),
                   controller: bean.searchController,
-                  focusNode: bean.focusNode,
                   autofocus: true,
                   textInputType: TextInputType.text,
                   labelText: 'labelText',

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 class HomeSearchBean extends GetxController {
   TextEditingController searchController = TextEditingController();
-  final FocusNode focusNode = FocusNode();
 
   @override
   void onInit() {

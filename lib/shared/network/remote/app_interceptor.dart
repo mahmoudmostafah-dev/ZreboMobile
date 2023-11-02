@@ -19,7 +19,7 @@ class AppInterceptor extends Interceptor {
             options.uri.path == '/api/${EndPoint.apiSignUp}';
 
     // Only add the Authorization header if it's not a login request.
-    if (!isLoginOrRegistrationRequest) {
+    if (GetStorage().read<String>(StorageNames.tokenBox) != null) {
       options.headers[HttpHeaders.authorizationHeader] = AppStrings.bearer +
           (GetStorage().read<String>(StorageNames.tokenBox) ?? '');
     }

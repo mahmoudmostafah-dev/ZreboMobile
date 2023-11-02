@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vortex_zrebo_mobile/pages/home/widgets/Nav_Dest_Icon.dart';
 
 import '../../../shared/widgets/text_utils.dart';
 import '../item/item_screen.dart';
 import '../order/order_screen.dart';
 import '../profile/profile_screen.dart';
+import 'widgets/Nav_Dest_Icon.dart';
 
 class HomeBean extends GetxController {
   int currentIndex = 0;
 
-  TextEditingController searchController = TextEditingController();
   List<NavigationDestination> barItemList = [
     NavigationDestination(
       selectedIcon:
@@ -45,6 +44,19 @@ class HomeBean extends GetxController {
   ];
 
   void changeBottom(int index) {
+    print(index);
+
+    switch (index) {
+      case 0:
+        // Get.put(ItemScreenBind());
+        print(index);
+
+      case 1:
+        print(index);
+      case 2:
+        print(index);
+    }
+
     currentIndex = index;
     update();
   }

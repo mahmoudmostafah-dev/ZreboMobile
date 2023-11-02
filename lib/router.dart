@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:vortex_zrebo_mobile/pages/item/item_screen_bind.dart';
 
 import 'pages/auth/login/login_bind.dart';
 import 'pages/auth/login/login_screen.dart';
@@ -17,7 +18,7 @@ class AppRouter {
     GetPage(
       name: HomeScreen.routeName,
       page: () => HomeScreen(),
-      bindings: [HomeBind()],
+      bindings: [ItemScreenBind(), HomeBind()],
     ),
     GetPage(
       name: HomeSearchScreen.routeName,
