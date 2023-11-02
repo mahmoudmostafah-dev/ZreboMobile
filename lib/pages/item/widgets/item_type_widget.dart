@@ -25,23 +25,39 @@ class ItemTypeWidget extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
-              onTap: () => print(listItemType[index].name),
+              onTap: () {
+                if (listItemType[index].id == -1) {
+                  print(listItemType[index].name);
+                } else {
+                  print(listItemType[index].name);
+                }
+              },
               child: Column(
                 children: [
                   CircleAvatar(
-                      backgroundColor: Colors.amber.shade100,
-                      radius: SizeConfig.blockSizeVertical * 4.5,
-                      child: CachedNetworkImage(
-                        imageUrl:
-                            '${ServerNames.serverImages}${listItemType[index].image}',
-                        width: SizeConfig.safeBlockHorizontal * 11,
-                        fit: BoxFit.cover,
-                      )),
+                    backgroundColor: listItemType[index].id == -1
+                        ? Colors.orange.shade200
+                        : Colors.amber.shade100,
+                    radius: SizeConfig.blockSizeVertical * 4.5,
+                    child: listItemType[index].id == -1
+                        ? const Icon(
+                            Icons.arrow_forward,
+                            color: Colors.red,
+                            size: 30,
+                          )
+                        : CachedNetworkImage(
+                            imageUrl:
+                                '${ServerNames.serverImages}${listItemType[index].image}',
+                            width: SizeConfig.safeBlockHorizontal * 11,
+                            fit: BoxFit.cover,
+                          ),
+                  ),
                   TextUtils(
                     text: listItemType[index].name,
                     fontSize:
                         SizeConfig.safeBlockHorizontal * 5, // Adjust font size
-                    color: Colors.black,
+                    color:
+                        listItemType[index].id == -1 ? Colors.red : Colors.red,
                   ),
                 ],
               ),

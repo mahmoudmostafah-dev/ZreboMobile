@@ -15,4 +15,5 @@ const Map<String, String> ar = {
   "search": "بحث",
   "findRestOrFood": "دور علي مطعم او اكله",
   "findAllFoods": "اكتشف كل الاكلات",
+  "all": "الكل",
 };

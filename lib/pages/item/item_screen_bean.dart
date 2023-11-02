@@ -12,21 +12,44 @@ class ItemScreenBean extends GetxController {
 
   List<ItemTypeModel> listItemType = [];
 
-  int page = 0;
-  String? nextUrl;
-
   @override
   Future<void> onInit() async {
-    await getAllItemTypePag(firstTime: true);
+    await getAllItemTypePag();
 
-    while (nextUrl != null) {
-      await getAllItemTypePag(firstTime: false);
-    }
     // TODO: implement onInit
 
     super.onInit();
   }
 
+  Future<void> getAllItemTypePag() async {
+    listItemType.clear();
+
+    ItemTypePaginated paginated =
+        await itemProvider.getAllItemTypePaginated(pageSize: 9);
+
+    listItemType = paginated.results;
+
+    listItemType.add(ItemTypeModel(id: -1, name: 'all'.tr, image: ''));
+
+    update();
+  }
+
+  // int page = 0;
+  // String? nextUrl;
+
+  // @override
+  // Future<void> onInit() async {
+  //   await getAllItemTypePag(firstTime: true);
+  //
+  //   while (nextUrl != null) {
+  //     await getAllItemTypePag(firstTime: false);
+  //   }
+  //   // TODO: implement onInit
+  //
+  //   super.onInit();
+  // }
+
+/*
   Future<void> getAllItemTypePag({bool firstTime = false}) async {
     page++;
     if (firstTime) {
@@ -51,7 +74,7 @@ class ItemScreenBean extends GetxController {
 
     update();
   }
-
+*/
   @override
   void onClose() {
     searchController.dispose();
