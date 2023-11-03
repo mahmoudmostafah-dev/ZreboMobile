@@ -14,6 +14,8 @@ const Map<String, String> ar = {
   "userNFound": "يجب مراجعة بيانات الدخول",
   "search": "بحث",
   "findRestOrFood": "دور علي مطعم او اكله",
+  "findFood": "دور علي اكله",
   "findAllFoods": "اكتشف كل الاكلات",
   "all": "الكل",
+  "allFoods": "كل الاكلات",
 };

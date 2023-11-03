@@ -16,14 +16,23 @@ class ItemTypeCountWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConditionBuilderWidget(
       condition: listItemType.isNotEmpty,
-      builder: (context) => ListView.separated(
-        scrollDirection: Axis.vertical,
+      builder: (context) => GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 4, // number of items per row is set to 4
+          childAspectRatio:
+              SizeConfig.blockSizeVertical * 0.08, // aspect ratio of each item
+          crossAxisSpacing: SizeConfig.blockSizeHorizontal *
+              2, // horizontal space between items
+          mainAxisSpacing:
+              SizeConfig.blockSizeVertical * 1, // vertical space between items
+        ),
         itemCount: listItemType.length,
         physics: const BouncingScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {},
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 CircleAvatar(
                   backgroundColor: Colors.amber.shade100,
@@ -35,19 +44,25 @@ class ItemTypeCountWidget extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
+                SizedBox(
+                    height: SizeConfig.blockSizeVertical *
+                        1), // Space between the image and text
                 TextUtils(
                   text: listItemType[index].name,
-                  fontSize:
-                      SizeConfig.safeBlockHorizontal * 5, // Adjust font size
+                  fontSize: SizeConfig.safeBlockHorizontal *
+                      3, // Adjust font size if necessary
+                  color: Colors.black45,
+                ),
+                TextUtils(
+                  text: '(${listItemType[index].itemCount.toString()})',
+                  fontSize: SizeConfig.safeBlockHorizontal *
+                      3, // Adjust font size if necessary
                   color: Colors.black45,
                 ),
               ],
             ),
           );
         },
-        separatorBuilder: (context, index) => const SizedBox(
-          width: 20,
-        ),
       ),
     );
   }
