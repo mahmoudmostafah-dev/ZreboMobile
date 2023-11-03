@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart%20';
-import 'package:dio/io.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' as g;
 import 'package:get_storage/get_storage.dart';
@@ -27,12 +24,6 @@ class DioHelper {
         // 60 seconds
       ),
     )..interceptors.add(AppInterceptor());
-    (dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
-        (HttpClient client) {
-      client.badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-      return client;
-    };
   }
 
   static Future<dynamic> getData({
@@ -45,8 +36,8 @@ class DioHelper {
     try {
       response = await dio.get(url, queryParameters: query, options: options);
       return response;
-    } on DioError catch (error) {
-      _handleDioError(error);
+    } on DioException catch (error) {
+      _handleDioException(error);
     }
   }
 
@@ -64,8 +55,8 @@ class DioHelper {
           queryParameters: query, data: data, options: options);
 
       return response;
-    } on DioError catch (error) {
-      _handleDioError(error);
+    } on DioException catch (error) {
+      _handleDioException(error);
     }
   }
 
@@ -78,8 +69,8 @@ class DioHelper {
       response = await dio.delete(url, queryParameters: query);
 
       return response;
-    } on DioError catch (error) {
-      _handleDioError(error);
+    } on DioException catch (error) {
+      _handleDioException(error);
     }
   }
 
@@ -93,17 +84,17 @@ class DioHelper {
       response = await dio.post(url, data: data);
 
       return response;
-    } on DioError catch (error) {
-      _handleDioError(error);
+    } on DioException catch (error) {
+      _handleDioException(error);
     }
   }
 }
 
-dynamic _handleDioError(DioError error) {
+dynamic _handleDioException(DioException error) {
   switch (error.type) {
-    case DioErrorType.connectionTimeout:
-    case DioErrorType.sendTimeout:
-    case DioErrorType.receiveTimeout:
+    case DioExceptionType.connectionTimeout:
+    case DioExceptionType.sendTimeout:
+    case DioExceptionType.receiveTimeout:
       g.Get.showSnackbar(
         const g.GetSnackBar(
           message: "",
@@ -116,7 +107,7 @@ dynamic _handleDioError(DioError error) {
       );
 
       throw const FetchDataException();
-    case DioErrorType.badResponse:
+    case DioExceptionType.badResponse:
       switch (error.response?.statusCode) {
         case StatusCode.notFound:
           throw const NotFoundException();
@@ -137,9 +128,9 @@ dynamic _handleDioError(DioError error) {
           );
       }
       break;
-    case DioErrorType.cancel:
+    case DioExceptionType.cancel:
       break;
-    case DioErrorType.unknown:
+    case DioExceptionType.unknown:
       g.Get.showSnackbar(
         const g.GetSnackBar(
           message: "",
