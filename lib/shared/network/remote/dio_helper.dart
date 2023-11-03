@@ -40,7 +40,6 @@ class DioHelper {
     Map<String, dynamic>? query,
     Options? options,
   }) async {
-    await DioHelper.init();
     Response? response;
 
     try {
@@ -59,8 +58,6 @@ class DioHelper {
 
     //String? token,
   }) async {
-    await DioHelper.init();
-
     Response? response;
     try {
       response = await dio.post(url,
@@ -76,8 +73,6 @@ class DioHelper {
     required url,
     Map<String, dynamic>? query,
   }) async {
-    await DioHelper.init();
-
     Response? response;
     try {
       response = await dio.delete(url, queryParameters: query);
@@ -93,8 +88,6 @@ class DioHelper {
     required data,
     //String? token,
   }) async {
-    await DioHelper.init();
-
     Response? response;
     try {
       response = await dio.post(url, data: data);

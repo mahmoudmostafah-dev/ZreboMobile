@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:vortex_zrebo_mobile/pages/itemType/item_type_screen.dart';
 
 import '../../../models/itemType.dart';
 import '../../../shared/app_utils/size_config.dart';
@@ -27,7 +29,8 @@ class ItemTypeWidget extends StatelessWidget {
             return GestureDetector(
               onTap: () {
                 if (listItemType[index].id == -1) {
-                  print(listItemType[index].name);
+                  // print(listItemType[index].name);
+                  Get.toNamed(ItemTypeScreen.routeName);
                 } else {
                   print(listItemType[index].name);
                 }
@@ -56,8 +59,9 @@ class ItemTypeWidget extends StatelessWidget {
                     text: listItemType[index].name,
                     fontSize:
                         SizeConfig.safeBlockHorizontal * 5, // Adjust font size
-                    color:
-                        listItemType[index].id == -1 ? Colors.red : Colors.red,
+                    color: listItemType[index].id == -1
+                        ? Colors.red
+                        : Colors.black45,
                   ),
                 ],
               ),

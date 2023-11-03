@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final itemType = itemTypeFromJson(jsonString);
-
 class ItemTypePaginated {
   int count;
   String? next;
@@ -37,21 +33,26 @@ class ItemTypeModel {
   String name;
   String image;
 
+  int? itemCount;
+
   ItemTypeModel({
     required this.id,
     required this.name,
     required this.image,
+    this.itemCount,
   });
 
   factory ItemTypeModel.fromJson(Map<String, dynamic> json) => ItemTypeModel(
         id: json["id"],
         name: json["name"],
         image: json["image"],
+        itemCount: json["itemCount"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "image": image,
+        "itemCount": itemCount,
       };
 }

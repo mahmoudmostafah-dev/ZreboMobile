@@ -14,4 +14,22 @@ class ItemProvider {
       return throw Exception("Failed to Item Type Paginated");
     }
   }
+
+  Future<List<ItemTypeModel>> getAllItemTypeWithItemCount() async {
+    var value = await DioHelper.getData(
+      url: EndPoint.apiItemTypeWithItemCount,
+      query: {},
+    );
+
+    List<ItemTypeModel> itemsType = [];
+
+    if (value!.statusCode == 200 || value!.statusCode == 201) {
+      value.data.forEach((row) {
+        itemsType.add(ItemTypeModel.fromJson(row));
+      });
+      return itemsType;
+    } else {
+      return throw Exception("Failed to Item Type Paginated");
+    }
+  }
 }

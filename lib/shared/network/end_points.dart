@@ -5,4 +5,5 @@ class EndPoint {
   static String apiSignUp = 'user/register';
 
   static String apiItemType = 'itemType/';
+  static String apiItemTypeWithItemCount = '$apiItemType/itemCount/';
 }
