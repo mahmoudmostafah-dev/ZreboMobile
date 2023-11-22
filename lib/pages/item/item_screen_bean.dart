@@ -1,20 +1,30 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../models/RestaurantItem.dart';
 import '../../models/itemType.dart';
 import '../../providers/item_provider.dart';
 
 class ItemScreenBean extends GetxController {
   TextEditingController searchController = TextEditingController();
+  final CarouselController carouselController = CarouselController();
+  // final pageController = PageController(viewportFraction: 0.8, keepPage: true);
+
+  // ScrollController scrollController = ScrollController();
 
   ItemProvider itemProvider = Get.find();
   //final _box = GetStorage();
 
   List<ItemTypeModel> listItemType = [];
+  List<RestaurantItemResult> listRestaurantItem = [];
+
+  int restaurantItemIndex = 0;
 
   @override
   Future<void> onInit() async {
     await getAllItemTypePag();
+    await getAllRestWithItemsPaginated(firstTime: true);
 
     // TODO: implement onInit
 
@@ -34,47 +44,39 @@ class ItemScreenBean extends GetxController {
     update();
   }
 
-  // int page = 0;
-  // String? nextUrl;
+  int page = 0;
+  String? nextUrl;
 
-  // @override
-  // Future<void> onInit() async {
-  //   await getAllItemTypePag(firstTime: true);
-  //
-  //   while (nextUrl != null) {
-  //     await getAllItemTypePag(firstTime: false);
-  //   }
-  //   // TODO: implement onInit
-  //
-  //   super.onInit();
-  // }
-
-/*
-  Future<void> getAllItemTypePag({bool firstTime = false}) async {
+  Future<void> getAllRestWithItemsPaginated({bool firstTime = false}) async {
     page++;
     if (firstTime) {
-      listItemType.clear();
+      listRestaurantItem.clear();
 
-      ItemTypePaginated paginated =
-          await itemProvider.getAllItemTypePaginated(page);
+      RestaurantItemPaginated paginated =
+          await itemProvider.getAllRestWithItemsPaginated(page: page);
 
       nextUrl = paginated.next;
 
-      listItemType = paginated.results;
+      listRestaurantItem = paginated.results;
     } else {
       if (nextUrl != null) {
-        ItemTypePaginated paginated =
-            await itemProvider.getAllItemTypePaginated(page);
+        RestaurantItemPaginated paginated =
+            await itemProvider.getAllRestWithItemsPaginated(page: page);
 
         nextUrl = paginated.next;
 
-        listItemType.addAll(paginated.results);
+        listRestaurantItem.addAll(paginated.results);
       }
     }
 
     update();
   }
-*/
+
+  void restaurantItemChange(int index) {
+    restaurantItemIndex = index;
+    update();
+  }
+
   @override
   void onClose() {
     searchController.dispose();

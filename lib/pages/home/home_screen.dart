@@ -22,7 +22,6 @@ class HomeScreen extends StatelessWidget {
           ),
           bottomNavigationBar: NavigationBar(
             surfaceTintColor: Colors.white,
-            backgroundColor: Colors.white,
             selectedIndex: bean.currentIndex,
             indicatorColor: Colors.white,
             labelBehavior: NavigationDestinationLabelBehavior

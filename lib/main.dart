@@ -66,8 +66,8 @@ class MyApp extends StatelessWidget {
 
           GetStorage().read<bool>(StorageNames.isDarkBox) == false ||
                   GetStorage().read<bool>(StorageNames.isDarkBox) == null
-              ? ThemeMode.light
-              : ThemeMode.dark,
+              ? ThemeMode.dark
+              : ThemeMode.light,
 
       theme: ThemesApp.light,
       darkTheme: ThemesApp.dark,

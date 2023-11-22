@@ -6,4 +6,8 @@ class EndPoint {
 
   static String apiItemType = 'itemType/';
   static String apiItemTypeWithItemCount = '$apiItemType/itemCount/';
+
+  static String apiRestaurant = 'restaurant/';
+
+  static String apiGetAllWithItems = '$apiRestaurant/getAllWithItems/';
 }
