@@ -48,8 +48,8 @@ class ThemesApp {
     appBarTheme: AppBarTheme(
       titleSpacing: 20,
       backgroundColor: SharedColor.darkGreyClr,
-      iconTheme: const IconThemeData(
-        color: Colors.white,
+      iconTheme: IconThemeData(
+        color: SharedColor.primaryDark,
       ),
     ),
     bottomAppBarTheme: BottomAppBarTheme(

@@ -11,7 +11,7 @@ class SharedColor {
 
   static Color getLogoColorFive = const Color(0xff1B1F32);
 
-  static Color primaryDark = const Color(0xFFff4667);
+  static Color primaryDark = const Color(0xffF0B90B);
   static Color darkGreyClr = const Color.fromARGB(255, 68, 64, 64);
   static Color darkSettings = const Color(0xff6132e4);
   static Color accountSettings = const Color(0xff73bc65);
