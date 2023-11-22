@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vortex_zrebo_mobile/shared/styles/colors.dart';
 
 import '../../../shared/app_utils/size_config.dart';
 import 'home_bean.dart';
@@ -21,11 +22,16 @@ class HomeScreen extends StatelessWidget {
             child: bean.screenList[bean.currentIndex],
           ),
           bottomNavigationBar: NavigationBar(
-            surfaceTintColor: Colors.white,
+            backgroundColor:
+                Get.isDarkMode ? SharedColor.darkGreyClr : Colors.white,
+            surfaceTintColor:
+                Get.isDarkMode ? SharedColor.darkGreyClr : Colors.white,
             selectedIndex: bean.currentIndex,
-            indicatorColor: Colors.white,
+            indicatorColor:
+                Get.isDarkMode ? SharedColor.darkGreyClr : Colors.white,
             labelBehavior: NavigationDestinationLabelBehavior
-                .onlyShowSelected, // show selected label
+                .alwaysShow, // show selected label
+
             onDestinationSelected: (index) {
               bean.changeBottom(index);
             },
